@@ -37,7 +37,11 @@ cc.Class({
             default:null,
             type: cc.Prefab,
         },
-
+        catchedFishAnimTime: 0.5,
+        getFishNodeOriginPosition: {
+            default: null,
+            
+        },
     },
 
     // LIFE-CYCLE CALLBACKS:
@@ -51,6 +55,8 @@ cc.Class({
         this.schedule(function(){
             this.spwanOneFish();
         },this.spawnFishDt);
+
+        this.getFishNodeOriginPosition = cc.find("Canvas/getFishNode").getPosition();
      },
 
     start () {
@@ -62,6 +68,8 @@ cc.Class({
 
         var getFishNode = cc.find("Canvas/getFishNode");
         getFishNode.setPosition(location.x,location.y);
+        var motionComponent = getFishNode.getComponent(cc.MotionStreak);
+        motionComponent.enabled = true;
 
     },
     touchMoved(event){
@@ -73,7 +81,11 @@ cc.Class({
         getFishNode.setPosition(location.x,location.y);
     },
     touchEnd(event){
-        
+        var getFishNode = cc.find("Canvas/getFishNode");
+        var motion = getFishNode.getComponent(cc.MotionStreak);
+        motion.enabled = false;
+        getFishNode.setPosition(this.getFishNodeOriginPosition);
+
     },
     touchCancel(event){
 
@@ -116,8 +128,21 @@ cc.Class({
         var fishesNode = cc.find("Canvas/fishesNode");
         fishesNode.addChild(newFish);
 
-        //let fish to move to it's target
+        //let fish to face to it's target
         var targetPositon = this.getOneRandomPositionBySpawnArea(targetSpawnAreaNum);
+        var helper = require("helper");
+        helper.turnOneNodeToOnePosition(newFish,targetPositon);
+
+        //add animation of fish
+        var swimLeft = cc.rotateBy(0.5,30);
+        var leftBack = cc.rotateBy(0.5,-30);
+        var swimRight = cc.rotateBy(0.5,-30);
+        var rightBack = cc.rotateBy(0.5,30);
+        var swimAction = cc.sequence(swimLeft,leftBack,swimRight,rightBack);
+        var swimAnimation = cc.repeatForever(swimAction);
+        newFish.runAction(swimAnimation);
+
+        //let fish to move to it's target
         var moveAction = cc.moveTo(this.fishMoveDuration,targetPositon);
         var fishAction = cc.sequence(moveAction,cc.removeSelf());
 
@@ -158,6 +183,24 @@ cc.Class({
                     //do something
                     var position = fishes[x].getPosition();
                     fishes[x].removeFromParent();
+
+                    //setup catchedFish
+                    var catchedFish = cc.instantiate(this.fishPrefab);
+                    var catchedFishTargetPosition = cc.v2(0,-151);
+                    var jumpAction = cc.jumpTo(this.catchedFishAnimTime,catchedFishTargetPosition,50,1);
+                    var scaleUpAction = cc.scaleTo(0.3 * this.catchedFishAnimTime,1.5,1.5);
+                    var scaleDownAction = cc.scaleTo(0.7 * this.catchedFishAnimTime,0.5,0.5);
+                    var scalAction = cc.sequence(scaleUpAction,scaleDownAction,cc.removeSelf());
+                    var action = cc.spawn(jumpAction,scalAction);
+
+                    catchedFish.position = position;
+                    var helper = require("helper");
+                    helper.turnOneNodeToOnePosition(catchedFish,catchedFishTargetPosition);
+                    var catchedFishesNode = cc.find("Canvas/catchedFishesNode");
+                    catchedFishesNode.addChild(catchedFish);
+                    catchedFish.runAction(action);
+                    
+                    //setup dollorLabel
                     var newLabel = cc.instantiate(this.dollorLabelPrefab);
                     newLabel.setPosition(position);
                     dollorLabelesNode.addChild(newLabel);

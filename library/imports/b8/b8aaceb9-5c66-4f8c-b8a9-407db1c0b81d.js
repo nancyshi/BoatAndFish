@@ -65,6 +65,13 @@ var helper = {
         oneNode.right = cc.v2(oneNode.x + oneNode.width / 2, oneNode.y);
         oneNode.top = cc.v2(oneNode.x, oneNode.y + oneNode.height / 2);
         oneNode.bottom = cc.v2(oneNode.x, oneNode.y - oneNode.height / 2);
+    },
+    turnOneNodeToOnePosition: function turnOneNodeToOnePosition(oneNode, targetPosition) {
+        var nodePosition = oneNode.getPosition();
+        var yMinus = targetPosition.y - nodePosition.y;
+        var xMinus = targetPosition.x - nodePosition.x;
+        var degree = Math.atan2(yMinus, xMinus) * 180 / Math.PI;
+        oneNode.rotation = -1 * degree;
     }
 };
 

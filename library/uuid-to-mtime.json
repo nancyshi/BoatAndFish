@@ -245,7 +245,7 @@
     "relativePath": "prefab/webview.prefab"
   },
   "3d2e112c-1a7a-4b6c-9e8f-99da9e1aaf51": {
-    "asset": 1547039925957,
+    "asset": 1547046172062,
     "meta": 1547039925959,
     "relativePath": "pics"
   },
@@ -260,7 +260,7 @@
     "relativePath": "pics/boat.png"
   },
   "543f0420-2c9e-4364-b274-a3e5480695c5": {
-    "asset": 1547040175484,
+    "asset": 1547054741189,
     "meta": 1547040175486,
     "relativePath": "scripts"
   },
@@ -270,43 +270,53 @@
     "relativePath": "pics/fish.png"
   },
   "11d7c78e-3990-4e03-afe2-570a07bd6aaf": {
-    "asset": 1547041031243,
+    "asset": 1547041050159,
     "meta": 1547041031245,
     "relativePath": "scenes"
   },
   "15bd77a1-8ee7-4491-bd1a-0725393e10cb": {
-    "asset": 1547058250360,
-    "meta": 1547058250378,
+    "asset": 1547316170575,
+    "meta": 1547316170584,
     "relativePath": "scenes/mainScene.fire"
   },
   "e8445037-0c41-4749-a192-f1b8925ac2d6": {
     "asset": 1547046172061,
     "meta": 1547046172076,
-    "relativePath": "pics/motion.png"
+    "relativePath": "resources/motion.png"
   },
   "cf10bc00-c512-4fbe-aeaf-8b32abae7568": {
-    "asset": 1547046438832,
-    "meta": 1547046438838,
+    "asset": 1547304540734,
+    "meta": 1547304540739,
     "relativePath": "prefabs/fish.prefab"
   },
   "e0f107c3-dffe-4f94-a906-881e2a1bba4c": {
-    "asset": 1547046446367,
+    "asset": 1547056384335,
     "meta": 1547046446368,
     "relativePath": "prefabs"
-  },
-  "b8aaceb9-5c66-4f8c-b8a9-407db1c0b81d": {
-    "asset": 1547055750797,
-    "meta": 1547055759331,
-    "relativePath": "scripts/helper.js"
   },
   "725bb18d-bcc1-48d1-bef8-9536c57c1a3f": {
     "asset": 1547057198159,
     "meta": 1547057198174,
     "relativePath": "prefabs/dollorLabelNode.prefab"
   },
+  "7d85977e-4048-44ff-bc23-408c5cf80dc4": {
+    "asset": 1547304033363,
+    "meta": 1547304033378,
+    "relativePath": "swim.anim"
+  },
+  "f195806c-50ac-45b0-941d-04e19cd20103": {
+    "asset": 1547311648898,
+    "meta": 1547311648899,
+    "relativePath": "resources"
+  },
+  "b8aaceb9-5c66-4f8c-b8a9-407db1c0b81d": {
+    "asset": 1547314020776,
+    "meta": 1547314021744,
+    "relativePath": "scripts/helper.js"
+  },
   "442deba2-43cb-488c-9abe-b862de0194a1": {
-    "asset": 1547057488120,
-    "meta": 1547057551406,
+    "asset": 1547316166522,
+    "meta": 1547316170564,
     "relativePath": "scripts/gameLogic.js"
   }
 }
