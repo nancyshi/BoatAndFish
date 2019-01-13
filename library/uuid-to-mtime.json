@@ -245,7 +245,7 @@
     "relativePath": "prefab/webview.prefab"
   },
   "3d2e112c-1a7a-4b6c-9e8f-99da9e1aaf51": {
-    "asset": 1547046172062,
+    "asset": 1547311700375,
     "meta": 1547039925959,
     "relativePath": "pics"
   },
@@ -275,8 +275,8 @@
     "relativePath": "scenes"
   },
   "15bd77a1-8ee7-4491-bd1a-0725393e10cb": {
-    "asset": 1547316170575,
-    "meta": 1547316170584,
+    "asset": 1547359307862,
+    "meta": 1547359308462,
     "relativePath": "scenes/mainScene.fire"
   },
   "e8445037-0c41-4749-a192-f1b8925ac2d6": {
@@ -299,13 +299,8 @@
     "meta": 1547057198174,
     "relativePath": "prefabs/dollorLabelNode.prefab"
   },
-  "7d85977e-4048-44ff-bc23-408c5cf80dc4": {
-    "asset": 1547304033363,
-    "meta": 1547304033378,
-    "relativePath": "swim.anim"
-  },
   "f195806c-50ac-45b0-941d-04e19cd20103": {
-    "asset": 1547311648898,
+    "asset": 1547311700375,
     "meta": 1547311648899,
     "relativePath": "resources"
   },
@@ -315,8 +310,8 @@
     "relativePath": "scripts/helper.js"
   },
   "442deba2-43cb-488c-9abe-b862de0194a1": {
-    "asset": 1547316166522,
-    "meta": 1547316170564,
+    "asset": 1547359497648,
+    "meta": 1547359498540,
     "relativePath": "scripts/gameLogic.js"
   }
 }

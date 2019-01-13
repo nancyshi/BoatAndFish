@@ -40,8 +40,26 @@ cc.Class({
         catchedFishAnimTime: 0.5,
         getFishNodeOriginPosition: {
             default: null,
-            
+            visible: false,
         },
+        
+        fishesNode: {
+            default: null,
+            type: cc.Node,
+        },
+        getFishNode: {
+            default: null,
+            type: cc.Node,
+        },
+        dollorLabelesNode: {
+            default: null,
+            type: cc.Node,
+        },
+        catchedFishesNode: {
+            default: null,
+            type: cc.Node,
+        },
+
     },
 
     // LIFE-CYCLE CALLBACKS:
@@ -56,7 +74,7 @@ cc.Class({
             this.spwanOneFish();
         },this.spawnFishDt);
 
-        this.getFishNodeOriginPosition = cc.find("Canvas/getFishNode").getPosition();
+        this.getFishNodeOriginPosition = this.getFishNode.getPosition();
      },
 
     start () {
@@ -66,9 +84,8 @@ cc.Class({
         var y = event.getLocationY();
         var location = this.node.convertToNodeSpaceAR(cc.v2(x,y));
 
-        var getFishNode = cc.find("Canvas/getFishNode");
-        getFishNode.setPosition(location.x,location.y);
-        var motionComponent = getFishNode.getComponent(cc.MotionStreak);
+        this.getFishNode.setPosition(location.x,location.y);
+        var motionComponent = this.getFishNode.getComponent(cc.MotionStreak);
         motionComponent.enabled = true;
 
     },
@@ -76,15 +93,12 @@ cc.Class({
         var x = event.getLocationX();
         var y = event.getLocationY();
         var location = this.node.convertToNodeSpaceAR(cc.v2(x,y));
-
-        var getFishNode = cc.find("Canvas/getFishNode");
-        getFishNode.setPosition(location.x,location.y);
+        this.getFishNode.setPosition(location.x,location.y);
     },
     touchEnd(event){
-        var getFishNode = cc.find("Canvas/getFishNode");
-        var motion = getFishNode.getComponent(cc.MotionStreak);
+        var motion = this.getFishNode.getComponent(cc.MotionStreak);
         motion.enabled = false;
-        getFishNode.setPosition(this.getFishNodeOriginPosition);
+        this.getFishNode.setPosition(this.getFishNodeOriginPosition);
 
     },
     touchCancel(event){
@@ -125,8 +139,7 @@ cc.Class({
         //fish spwan position
         var spawnPosition = this.getOneRandomPositionBySpawnArea(spawnAreaNum);
         newFish.setPosition(spawnPosition);
-        var fishesNode = cc.find("Canvas/fishesNode");
-        fishesNode.addChild(newFish);
+        this.fishesNode.addChild(newFish);
 
         //let fish to face to it's target
         var targetPositon = this.getOneRandomPositionBySpawnArea(targetSpawnAreaNum);
@@ -172,14 +185,11 @@ cc.Class({
         return cc.v2(spawnX,spawnY);
     },
     update (dt) {
-        var fishesNode = cc.find("Canvas/fishesNode");
-        var getFishNode = cc.find("Canvas/getFishNode");
-        var fishes = fishesNode.children;
+        var fishes = this.fishesNode.children;
         var helper = require("helper");
-        var dollorLabelesNode = cc.find("Canvas/dollorLabelesNode");
         if (fishes.length > 0){
             for(var x in fishes){
-                if (helper.isOneNodeInAnotherNode(getFishNode,fishes[x]) == true){
+                if (helper.isOneNodeInAnotherNode(this.getFishNode,fishes[x]) == true){
                     //do something
                     var position = fishes[x].getPosition();
                     fishes[x].removeFromParent();
@@ -194,16 +204,14 @@ cc.Class({
                     var action = cc.spawn(jumpAction,scalAction);
 
                     catchedFish.position = position;
-                    var helper = require("helper");
                     helper.turnOneNodeToOnePosition(catchedFish,catchedFishTargetPosition);
-                    var catchedFishesNode = cc.find("Canvas/catchedFishesNode");
-                    catchedFishesNode.addChild(catchedFish);
+                    this.catchedFishesNode.addChild(catchedFish);
                     catchedFish.runAction(action);
                     
                     //setup dollorLabel
                     var newLabel = cc.instantiate(this.dollorLabelPrefab);
                     newLabel.setPosition(position);
-                    dollorLabelesNode.addChild(newLabel);
+                    this.dollorLabelesNode.addChild(newLabel);
                     var fadeOut = cc.fadeOut(1.0);
                     var action = cc.sequence(fadeOut,cc.removeSelf());
                     newLabel.runAction(action);
