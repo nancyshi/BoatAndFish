@@ -59,12 +59,22 @@ cc.Class({
             default: null,
             type: cc.Node,
         },
+        currentDollorLabel: cc.Label,
+
+        dataCenter: {
+            default: null,
+            visible: false
+        },
 
     },
 
     // LIFE-CYCLE CALLBACKS:
 
      onLoad () {
+        this.dataCenter = require("dataCenter");
+        this.dataCenter.setUpPlayerDataFromServer();
+        this.setUpPerformanceByData();
+
         this.node.on("touchstart",this.touchBegan,this);
         this.node.on("touchmove",this.touchMoved,this);
         this.node.on("touchend",this.touchEnd,this);
@@ -75,6 +85,7 @@ cc.Class({
         },this.spawnFishDt);
 
         this.getFishNodeOriginPosition = this.getFishNode.getPosition();
+
      },
 
     start () {
@@ -102,7 +113,7 @@ cc.Class({
 
     },
     touchCancel(event){
-
+        this.touchEnd();
     },
 
     onDestroy(){
@@ -189,8 +200,12 @@ cc.Class({
         var helper = require("helper");
         if (fishes.length > 0){
             for(var x in fishes){
-                if (helper.isOneNodeInAnotherNode(this.getFishNode,fishes[x]) == true){
-                    //do something
+                if (helper.isOneNodeInAnotherNode(this.getFishNode,fishes[x]) == true){ // catch one fish
+                    //data things
+                    this.dataCenter.playerData.currentDollor += 22;
+                    this.dataCenter.storePlayerData();
+                    this.setUpPerformanceByData();
+                    //remove selected fish
                     var position = fishes[x].getPosition();
                     fishes[x].removeFromParent();
 
@@ -220,4 +235,13 @@ cc.Class({
             }
         } 
     },
+
+    setUpPerformanceByData(){
+        //currentDollorLabel
+        var currentDollor = this.dataCenter.playerData.currentDollor;
+        var helper = require("helper");
+        var text = helper.formatNumberShowStyle(currentDollor);
+
+        this.currentDollorLabel.string = "$ " + text;
+    }
 });

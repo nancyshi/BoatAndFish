@@ -73,6 +73,24 @@ var helper = {
         oneNode.rotation = -1 *degree;
 
     },
+    formatNumberShowStyle(givenNumber) {
+        //rules: 
+        //0 - 1million , show the real number which seperated by , each 3 number 
+        var tempNumber = givenNumber / 1000;
+        var stringForReturn = "";
+
+        while(tempNumber >= 1) {
+            var lastThreeNumber = tempNumber.toFixed(3).slice(-3);
+            var lastString = "," + lastThreeNumber;
+            stringForReturn = lastString + stringForReturn;
+
+            tempNumber = Math.floor(tempNumber) / 1000;
+        }
+        tempNumber = tempNumber * 1000;
+        stringForReturn = tempNumber.toString() + stringForReturn;
+        return stringForReturn;
+
+    },
 }
 
 module.exports = helper;

@@ -37,7 +37,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 153.84,
+      "width": 199.69,
       "height": 60
     },
     "_anchorPoint": {
@@ -94,7 +94,7 @@
     "_spacingX": 0,
     "_N$horizontalAlign": 1,
     "_N$verticalAlign": 1,
-    "_N$fontFamily": "PingFang BOLD",
+    "_N$fontFamily": "Arial Black",
     "_N$overflow": 0,
     "_id": ""
   },
