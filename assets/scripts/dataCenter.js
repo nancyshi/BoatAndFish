@@ -25,13 +25,47 @@ var dataCenter = {
         }
     },
     
-    changeData(){
-        
+    changePlayerData(key,value){
+        this.playerData.key = value;
     },
     storePlayerData(){
         //it will not be used when server start to deal with data
         cc.sys.localStorage.setItem("playerData",JSON.stringify(this.playerData));
-    }
+    },
+    getRefreshRuleFromServerByAreaLevel(givenLevel){
+        cc.loader.loadRes("refreshRuleConfig",function(err,refreshConfig){
+            if (err) {
+                cc.log(err);
+            }
+            else {
+                for (var index in refreshConfig.json) {
+                    if (refreshConfig.json[index].areaId == givenLevel) {
+                        return refreshConfig.json[index];
+                    }
+                }
+            }
+        })
+    },
+    getFishConfigByFishId(givenId) {
+        cc.loader.loadRes("fishConfig",function(err,fishConfig){
+            var fishModelName = null
+            var fishDollor = null
+            for(var index in fishConfig.json) {
+                if (fishConfig.json[index].fishId == givenId) {
+                    fishModelName = fishConfig.json[index].fishModelName;
+                    fishDollor = fishConfig.json[index].fishDollor;
+                    break;
+                }
+            }
+            if (fishModelName != null && fishDollor != null) {
+                return [fishModelName, fishDollor];
+            }
+            else {
+                return null
+            }
+        })
+    },
+
 }
 
 module.exports = dataCenter;

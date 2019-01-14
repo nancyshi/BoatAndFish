@@ -89,6 +89,14 @@ var helper = {
         tempNumber = tempNumber * 1000;
         stringForReturn = tempNumber.toString() + stringForReturn;
         return stringForReturn;
+    },
+    isHittedByProbability: function isHittedByProbability(givenProbability, basicNum) {
+        var num = Math.random() * basicNum;
+        if (num < givenProbability) {
+            return true;
+        } else {
+            return false;
+        }
     }
 };
 

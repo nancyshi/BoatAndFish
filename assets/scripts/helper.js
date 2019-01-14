@@ -91,6 +91,15 @@ var helper = {
         return stringForReturn;
 
     },
+    isHittedByProbability(givenProbability, basicNum) {
+        var num = Math.random() * basicNum;
+        if ( num < givenProbability) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
 }
 
 module.exports = helper;

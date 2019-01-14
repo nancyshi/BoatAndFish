@@ -260,7 +260,7 @@
     "relativePath": "pics/boat.png"
   },
   "543f0420-2c9e-4364-b274-a3e5480695c5": {
-    "asset": 1547389458456,
+    "asset": 1547483513408,
     "meta": 1547040175486,
     "relativePath": "scripts"
   },
@@ -275,8 +275,8 @@
     "relativePath": "scenes"
   },
   "15bd77a1-8ee7-4491-bd1a-0725393e10cb": {
-    "asset": 1547398450652,
-    "meta": 1547398450670,
+    "asset": 1547491262757,
+    "meta": 1547491262768,
     "relativePath": "scenes/mainScene.fire"
   },
   "e8445037-0c41-4749-a192-f1b8925ac2d6": {
@@ -286,11 +286,11 @@
   },
   "cf10bc00-c512-4fbe-aeaf-8b32abae7568": {
     "asset": 1547304540734,
-    "meta": 1547304540739,
-    "relativePath": "prefabs/fish.prefab"
+    "meta": 1547481777011,
+    "relativePath": "resources/fish_10001.prefab"
   },
   "e0f107c3-dffe-4f94-a906-881e2a1bba4c": {
-    "asset": 1547056384335,
+    "asset": 1547482066288,
     "meta": 1547046446368,
     "relativePath": "prefabs"
   },
@@ -300,7 +300,7 @@
     "relativePath": "prefabs/dollorLabelNode.prefab"
   },
   "f195806c-50ac-45b0-941d-04e19cd20103": {
-    "asset": 1547311700375,
+    "asset": 1547483557080,
     "meta": 1547311648899,
     "relativePath": "resources"
   },
@@ -309,19 +309,44 @@
     "meta": 1547392199041,
     "relativePath": "pics/testRect.png"
   },
+  "308aa07a-5efa-498a-b56e-b9ecfd6d2650": {
+    "asset": 1547482081069,
+    "meta": 1547482098797,
+    "relativePath": "resources/fish_10002.prefab"
+  },
+  "6dd19278-e49f-4cda-baef-fc35ed92b533": {
+    "asset": 1547482100830,
+    "meta": 1547482113126,
+    "relativePath": "resources/fish_10003.prefab"
+  },
+  "aaca739b-2a0d-454e-adef-3a4845419aa8": {
+    "asset": 1547484560159,
+    "meta": 1547484561603,
+    "relativePath": "resources/fishConfig.json"
+  },
   "2d0a0f02-b8a5-4f67-bec4-1775a055a3fd": {
-    "asset": 1547395554007,
-    "meta": 1547395554899,
+    "asset": 1547486528832,
+    "meta": 1547489548412,
     "relativePath": "scripts/dataCenter.js"
   },
-  "442deba2-43cb-488c-9abe-b862de0194a1": {
-    "asset": 1547396512127,
-    "meta": 1547396514000,
-    "relativePath": "scripts/gameLogic.js"
+  "5169ffbb-432e-4784-914f-9f0c842be47f": {
+    "asset": 1547487657428,
+    "meta": 1547489548501,
+    "relativePath": "resources/refreshRuleConfig.json"
   },
   "b8aaceb9-5c66-4f8c-b8a9-407db1c0b81d": {
-    "asset": 1547396508155,
-    "meta": 1547396514001,
+    "asset": 1547488422186,
+    "meta": 1547489548573,
     "relativePath": "scripts/helper.js"
+  },
+  "f2107560-b8e7-4228-8f7b-a11f9b98eda5": {
+    "asset": 1547489684790,
+    "meta": 1547489694464,
+    "relativePath": "scripts/fishesMgr.js"
+  },
+  "442deba2-43cb-488c-9abe-b862de0194a1": {
+    "asset": 1547491259696,
+    "meta": 1547491262487,
+    "relativePath": "scripts/gameLogic.js"
   }
 }

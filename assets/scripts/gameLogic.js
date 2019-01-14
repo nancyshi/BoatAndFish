@@ -197,17 +197,21 @@ cc.Class({
     },
     update (dt) {
         var fishes = this.fishesNode.children;
+        var fishesMgr = this.fishesNode.getComponent("fishesMgr");
         var helper = require("helper");
         if (fishes.length > 0){
             for(var x in fishes){
                 if (helper.isOneNodeInAnotherNode(this.getFishNode,fishes[x]) == true){ // catch one fish
                     //data things
-                    this.dataCenter.playerData.currentDollor += 22;
+                    var fishConfig = fishesMgr.fishConfigs[x];
+                    var dollor = fishConfig[1];
+                    this.dataCenter.playerData.currentDollor += dollor;
                     this.dataCenter.storePlayerData();
                     this.setUpPerformanceByData();
                     //remove selected fish
                     var position = fishes[x].getPosition();
                     fishes[x].removeFromParent();
+                    fishesMgr.fishConfigs.splice(x,1);
 
                     //setup catchedFish
                     var catchedFish = cc.instantiate(this.fishPrefab);
@@ -243,5 +247,92 @@ cc.Class({
         var text = helper.formatNumberShowStyle(currentDollor);
 
         this.currentDollorLabel.string = "$ " + text;
+    },
+
+
+
+
+
+
+
+    openTouchEvent() {
+        this.node.on("touchstart",this.touchBegan,this);
+        this.node.on("touchmove",this.touchMoved,this);
+        this.node.on("touchend",this.touchEnd,this);
+        this.node.on("touchcancel",this.touchCancel,this);
+    },
+    closeTouchEvent(){
+        this.node.off("touchstart",this.touchBegan,this);
+        this.node.off("touchmove",this.touchMoved,this);
+        this.node.off("touchend",this.touchEnd,this);
+        this.node.off("touchcancel",this.touchCancel,this); 
+    },
+
+    startRefreshFishes(){
+        var refreshRule = this.dataCenter.getRefreshRuleFromServerByAreaLevel(this.dataCenter.playerData.currentAreaLevel).rules;
+        for (var index in refreshRule) {
+            this.schedule(function(){
+                this.spwanOneFishByFishId(refreshRule[index].fishId, refreshRule[index].probability);
+            },refreshRule[index].timeDelta);
+        }
+    },
+
+    spwanOneFishByFishId(givenFishId,probability){
+        if (probability == null || probability > 10000) {
+            probability = 10000;
+        }
+        var helper = require("helper");
+        if (helper.isHittedByProbability() == false) {
+            return
+        }
+        else {
+            var fishConfig = this.dataCenter.getFishConfigByFishId(givenFishId);
+            cc.loader.loadRes(fishConfig[0],function(err,fishPrefab){
+                var newFish = cc.instantiate(fishPrefab);
+                
+                var spawnAreaNum = Math.random() * 4;
+                spawnAreaNum = Math.floor(spawnAreaNum);
+                var targetAreaNum = this.getTargetAreaNumBySpawnAreaNum(spawnAreaNum);
+
+                var spawnPosition = this.getOneRandomPositionBySpawnArea(spawnAreaNum);
+                newFish.setPosition(spawnPosition);
+                this.fishesNode.addChild(newFish);
+                var fishesMgr = this.fishesNode.getComponent("fishesMgr");
+                fishesMgr.fishConfigs.push(fishConfig);
+
+                var targetPositon = this.getOneRandomPositionBySpawnArea(targetAreaNum);
+                helper.turnOneNodeToOnePosition(newFish,targetPositon);
+
+                var swimLeft = cc.rotateBy(0.5,30);
+                var leftBack = cc.rotateBy(0.5,-30);
+                var swimRight = cc.rotateBy(0.5,-30);
+                var rightBack = cc.rotateBy(0.5,30);
+                var swimAction = cc.sequence(swimLeft,leftBack,swimRight,rightBack);
+                var swimAnimation = cc.repeatForever(swimAction);
+                newFish.runAction(swimAnimation);
+
+                var moveAction = cc.moveTo(this.fishMoveDuration,targetPositon);
+                var fishAction = cc.sequence(moveAction,cc.removeSelf());
+                newFish.runAction(fishAction);
+            });
+        }
+    },
+    getTargetAreaNumBySpawnAreaNum(givenNum) {
+        var target = null;
+        switch(givenNum) {
+            case 0:
+                target = 1;
+                break;
+            case 1:
+                target = 0;
+                break;
+            case 2:
+                target = 3;
+                break;
+            case 3:
+                target = 2;
+                break;
+        }
+        return target;
     }
 });
