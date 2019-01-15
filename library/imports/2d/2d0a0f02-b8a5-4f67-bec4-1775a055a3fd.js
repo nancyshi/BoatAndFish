@@ -22,6 +22,13 @@ var dataCenter = {
         gotEquips: []
 
     },
+    currentRes: {
+        prefabs: [cc.Prefab]
+    },
+    configs: {
+        refreshConfig: null,
+        fishConfig: null
+    },
 
     setUpPlayerDataFromServer: function setUpPlayerDataFromServer() {
         //it should to get datas from server, now we will just read local data
@@ -29,6 +36,7 @@ var dataCenter = {
         if (localPlayerData != null) {
             this.playerData = localPlayerData;
         }
+        return true;
     },
     changePlayerData: function changePlayerData(key, value) {
         this.playerData.key = value;
@@ -37,34 +45,60 @@ var dataCenter = {
         //it will not be used when server start to deal with data
         cc.sys.localStorage.setItem("playerData", JSON.stringify(this.playerData));
     },
-    getRefreshRuleFromServerByAreaLevel: function getRefreshRuleFromServerByAreaLevel(givenLevel) {
-        cc.loader.loadRes("refreshRuleConfig", function (err, refreshConfig) {
+    getRefreshRuleByAreaLevel: function getRefreshRuleByAreaLevel(givenLevel, refreshConfig) {
+        if (refreshConfig == null) {
+            refreshConfig = this.configs.refreshConfig;
+        }
+        for (var index in refreshConfig) {
+            if (refreshConfig[index].areaId == givenLevel) {
+                return refreshConfig[index].rules;
+            }
+        }
+    },
+    getFishDetailConfigByFishId: function getFishDetailConfigByFishId(givenId, fishConfig) {
+        if (fishConfig == null) {
+            fishConfig = this.configs.fishConfig;
+        }
+        var fishModelName = null;
+        var fishDollor = null;
+        for (var index in fishConfig) {
+            if (fishConfig[index].fishId == givenId) {
+                fishModelName = fishConfig[index].fishModelName;
+                fishDollor = fishConfig[index].fishDollor;
+                break;
+            }
+        }
+        if (fishModelName != null && fishDollor != null) {
+            return [fishModelName, fishDollor];
+        }
+    },
+    getFishPrefabNamesByAreaLevel: function getFishPrefabNamesByAreaLevel(givenAreaLevel) {
+        if (givenAreaLevel == null) {
+            givenAreaLevel = this.dataCenter.currentAreaLevel;
+        }
+        var refreshRules = this.getRefreshRuleByAreaLevel(givenAreaLevel);
+        var fishIds = [];
+        for (var index in refreshRules) {
+            fishIds[index] = refreshRules[index].fishId;
+        }
+        var fishDetailConfigs = [];
+        for (var index in fishIds) {
+            fishDetailConfigs[index] = this.getFishDetailConfigByFishId(fishIds[index]);
+        }
+
+        var prefabNames = [];
+        for (var index in fishDetailConfigs) {
+            var oneDetailConfig = fishDetailConfigs[index];
+            prefabNames[index] = oneDetailConfig[0];
+        }
+        return prefabNames;
+    },
+    getJsonObjFromServerByJsonFileName: function getJsonObjFromServerByJsonFileName(givenName) {
+        cc.loader.loadRes(givenName, function (err, obj) {
             if (err) {
                 cc.log(err);
             } else {
-                for (var index in refreshConfig.json) {
-                    if (refreshConfig.json[index].areaId == givenLevel) {
-                        return refreshConfig.json[index];
-                    }
-                }
-            }
-        });
-    },
-    getFishConfigByFishId: function getFishConfigByFishId(givenId) {
-        cc.loader.loadRes("fishConfig", function (err, fishConfig) {
-            var fishModelName = null;
-            var fishDollor = null;
-            for (var index in fishConfig.json) {
-                if (fishConfig.json[index].fishId == givenId) {
-                    fishModelName = fishConfig.json[index].fishModelName;
-                    fishDollor = fishConfig.json[index].fishDollor;
-                    break;
-                }
-            }
-            if (fishModelName != null && fishDollor != null) {
-                return [fishModelName, fishDollor];
-            } else {
-                return null;
+                return obj.json;
             }
         });
     }
