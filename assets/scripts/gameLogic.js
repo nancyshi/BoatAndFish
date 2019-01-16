@@ -282,7 +282,7 @@ cc.Class({
             probability = 10000;
         }
         var helper = require("helper");
-        if (helper.isHittedByProbability() == false) {
+        if (helper.isHittedByProbability(probability,10000) == false) {
             return
         }
         else {

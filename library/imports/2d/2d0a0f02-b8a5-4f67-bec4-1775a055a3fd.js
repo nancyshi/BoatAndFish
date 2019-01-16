@@ -23,7 +23,7 @@ var dataCenter = {
 
     },
     currentRes: {
-        prefabs: [cc.Prefab]
+        prefabs: []
     },
     configs: {
         refreshConfig: null,
